@@ -1,5 +1,5 @@
 from timetable import load_modules, create_all_sessions, create_random_timetable
-from fitness import count_clashes, count_staff_days
+from fitness import count_clashes, count_staff_days, evaluate_timetable
 
 def main():
     modules = load_modules("data/modules.txt")
@@ -18,8 +18,9 @@ def main():
     for session, timeslot in timetable.items():
         print(f"{session} -> {timeslot}")
 
-    clashes = count_clashes(timetable, modules)
-    staff_days = count_staff_days(timetable, modules)
+    # clashes = count_clashes(timetable, modules)
+    # staff_days = count_staff_days(timetable, modules)
+    clashes, staff_days = evaluate_timetable(timetable, modules)
 
     print("\nObjective values:")
     print(f"Clashes: {clashes}")

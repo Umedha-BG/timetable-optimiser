@@ -46,3 +46,10 @@ def count_staff_days(timetable, modules):
         total_staff_days += len(days)
 
     return total_staff_days
+
+
+def evaluate_timetable(timetable, modules):
+    # Return both objective values together
+    clashes = count_clashes(timetable, modules)
+    staff_days = count_staff_days(timetable, modules)
+    return clashes, staff_days
