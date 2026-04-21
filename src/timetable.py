@@ -74,3 +74,13 @@ def create_random_timetable(modules):
         timetable[session] = random_timeslot()
 
     return timetable
+
+def create_population(modules, population_size):
+    # generating list of random timetables
+    population = []
+
+    for _ in range(population_size):
+        timetable = create_random_timetable(modules)
+        population.append(timetable)
+
+    return population

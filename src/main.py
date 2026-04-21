@@ -1,10 +1,12 @@
-from timetable import load_modules, create_all_sessions, create_random_timetable
+from timetable import load_modules, create_all_sessions, create_random_timetable, create_population
 from fitness import count_clashes, count_staff_days, evaluate_timetable
+from population import build_evaluated_population
 
 def main():
     modules = load_modules("data/modules.txt")
     sessions = create_all_sessions(modules)
     timetable = create_random_timetable(modules)
+    population = build_evaluated_population(modules, population_size=5)
 
     # print("Loaded modules:\n")
     # for module_id, info in modules.items():
@@ -14,17 +16,26 @@ def main():
     # for session in sessions:
     #     print(session)
 
-    print("Random timetable:\n")
-    for session, timeslot in timetable.items():
-        print(f"{session} -> {timeslot}")
+    # print("Random timetable:\n")
+    # for session, timeslot in timetable.items():
+    #     print(f"{session} -> {timeslot}")
 
     # clashes = count_clashes(timetable, modules)
     # staff_days = count_staff_days(timetable, modules)
-    clashes, staff_days = evaluate_timetable(timetable, modules)
+    # clashes, staff_days = evaluate_timetable(timetable, modules)
 
-    print("\nObjective values:")
-    print(f"Clashes: {clashes}")
-    print(f"Staff teaching days: {staff_days}")
+    # print("\nObjective values:")
+    # print(f"Clashes: {clashes}")
+    # print(f"Staff teaching days: {staff_days}")
+
+    print("Population size:", len(population))
+
+    for i, individual in enumerate(population, start=1):
+        clashes, staff_days = individual["objectives"]
+
+        print(f"\nIndividual {i}:")
+        print(f"Clashes = {clashes}, Staff teaching days = {staff_days}")
+
 
 if __name__ == "__main__":
     main()
