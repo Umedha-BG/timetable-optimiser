@@ -1,6 +1,7 @@
 from timetable import load_modules, create_all_sessions, create_random_timetable, create_population
 from fitness import count_clashes, count_staff_days, evaluate_timetable
 from population import build_evaluated_population
+from pareto import dominates
 
 def main():
     modules = load_modules("data/modules.txt")
@@ -36,6 +37,13 @@ def main():
         print(f"\nIndividual {i}:")
         print(f"Clashes = {clashes}, Staff teaching days = {staff_days}")
 
+    print("\nDominance checks:")
+
+    print("Individual 1 dominate Individual 2?",
+          dominates(population[0], population[1]))
+
+    print("Individual 2 dominate Individual 1?",
+          dominates(population[1], population[0]))
 
 if __name__ == "__main__":
     main()
