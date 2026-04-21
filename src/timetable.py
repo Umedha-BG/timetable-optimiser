@@ -1,3 +1,5 @@
+import random
+
 def normalise_module_code(code):
     # formatting issue fix in module codes
     code = code.strip().upper()
@@ -55,3 +57,20 @@ def create_all_sessions(modules):
             sessions.append((module_id, "lab", lab_number))
 
     return sessions
+
+def random_timeslot():
+    # individual random day/slot pair
+    day = random.choice(DAYS)
+    slot = random.choice(SLOTS)
+    return (day, slot)
+
+
+def create_random_timetable(modules):
+    # first random timetable
+    sessions = create_all_sessions(modules)
+    timetable = {}
+
+    for session in sessions:
+        timetable[session] = random_timeslot()
+
+    return timetable
