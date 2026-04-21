@@ -14,3 +14,24 @@ def dominates(individual_a, individual_b):
             strictly_better_in_at_least_one = True
 
     return no_worse_in_all and strictly_better_in_at_least_one
+
+
+def get_pareto_front(population):
+    # Return the list of non-dominated individuals
+    pareto_front = []
+
+    for i, individual_a in enumerate(population):
+        dominated = False
+
+        for j, individual_b in enumerate(population):
+            if i == j:
+                continue
+
+            if dominates(individual_b, individual_a):
+                dominated = True
+                break
+
+        if not dominated:
+            pareto_front.append(individual_a)
+
+    return pareto_front
