@@ -1,0 +1,39 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# VS Code settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build / distribution
+build/
+dist/
+*.egg-info/
+
+# Jupyter (if you ever use it)
+.ipynb_checkpoints/
+
+# Matplotlib cache
+.matplotlib/
+
+# Coverage / testing
+.coverage
+htmlcov/
+
+# Temporary files
+*.tmp
+*.bak
