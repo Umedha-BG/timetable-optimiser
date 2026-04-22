@@ -2,7 +2,7 @@ import random
 from timetable import create_population
 from fitness import evaluate_timetable
 from operators import mutate_timetable, crossover_timetables
-from pareto import get_pareto_front, non_dominated_sort
+from pareto import  non_dominated_sort
 
 def build_evaluated_population(modules, population_size):
     # Creating the population where each individual stores the timetable and objective values
@@ -21,24 +21,6 @@ def build_evaluated_population(modules, population_size):
 
     return evaluated_population
 
-
-# def create_offspring_population(population, modules):
-#     # mutating each parent timetable once to get offspring
-#     offspring = []
-
-#     for individual in population:
-#         parent_timetable = individual["timetable"]
-#         child_timetable = mutate_timetable(parent_timetable)
-#         child_objectives = evaluate_timetable(child_timetable, modules)
-
-#         child = {
-#             "timetable": child_timetable,
-#             "objectives": child_objectives
-#         }
-
-#         offspring.append(child)
-
-#     return offspring
 
 def create_offspring_population(population, modules, mutation_rate=0.3):
     #offspring using crossover and occasional mutation.
@@ -68,12 +50,6 @@ def create_offspring_population(population, modules, mutation_rate=0.3):
 
     return offspring
 
-
-# def combine_and_select_pareto(parents, offspring):
-#     # Combining parent and offspring populations and return non-dominated individuals.
-#     combined = parents + offspring
-#     pareto_front = get_pareto_front(combined)
-#     return pareto_front
 
 def combine_and_select_next_generation(parents, offspring, target_size):
     # Combine parent and offspring populations and select next gen using non-dominated sorting
