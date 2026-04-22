@@ -1,5 +1,5 @@
 import random
-random.seed(55)
+# random.seed(55)
 
 from timetable import load_modules, create_all_sessions, create_random_timetable, create_population
 from fitness import count_clashes, count_staff_days, evaluate_timetable
@@ -28,11 +28,12 @@ def main():
 
     final_population, history = run_simple_optimizer(
         modules,
-        population_size=20,
+        population_size=50,
         generations=20
     )
 
     final_front = get_pareto_front(final_population)
+    final_front.sort(key=lambda x: x["objectives"][0])
 
     # print("Loaded modules:\n")
     # for module_id, info in modules.items():

@@ -22,13 +22,18 @@ from pareto import get_pareto_front
 
 #     return population, history
 
-def run_simple_optimizer(modules, population_size=10, generations=10):
+def run_simple_optimizer(modules, population_size=10, generations=10, mutation_rate=0.3):
     # updated multi-objective evolutionary optimiser inspired with NSGA
     population = build_evaluated_population(modules, population_size)
     history = []
 
     for generation in range(generations):
-        offspring = create_offspring_population(population, modules)
+        offspring = create_offspring_population(
+            population,
+            modules,
+            mutation_rate=mutation_rate
+        )
+
         population = combine_and_select_next_generation(
             population,
             offspring,
