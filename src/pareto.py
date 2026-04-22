@@ -16,6 +16,26 @@ def dominates(individual_a, individual_b):
     return no_worse_in_all and strictly_better_in_at_least_one
 
 
+def non_dominated_sort(population):
+    # Splitting the population into Pareto fronts.
+    working_population = population.copy()
+    fronts = []
+
+    while working_population:
+        current_front = get_pareto_front(working_population)
+        fronts.append(current_front)
+
+        # Remove individuals in the current front from working_population
+        current_front_ids = {id(individual) for individual in current_front}
+        working_population = [
+            individual
+            for individual in working_population
+            if id(individual) not in current_front_ids
+        ]
+
+    return fronts
+
+
 def get_pareto_front(population):
     # Return the list of non-dominated individuals
     pareto_front = []

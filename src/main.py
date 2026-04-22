@@ -1,9 +1,9 @@
 import random
-random.seed(42)
+random.seed(55)
 
 from timetable import load_modules, create_all_sessions, create_random_timetable, create_population
 from fitness import count_clashes, count_staff_days, evaluate_timetable
-from population import build_evaluated_population, create_offspring_population, combine_and_select_pareto
+from population import build_evaluated_population, create_offspring_population, combine_and_select_next_generation
 from pareto import dominates, get_pareto_front
 from operators import mutate_timetable
 from optimizer import run_simple_optimizer
@@ -23,7 +23,8 @@ def main():
 
     parents = build_evaluated_population(modules, population_size=5)
     offspring = create_offspring_population(parents, modules)
-    survivors = combine_and_select_pareto(parents, offspring)
+    # survivors = combine_and_select_pareto(parents, offspring)
+    survivors = combine_and_select_next_generation(parents, offspring, target_size=5)
 
     final_population, history = run_simple_optimizer(
         modules,
