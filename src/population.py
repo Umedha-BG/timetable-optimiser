@@ -1,6 +1,7 @@
+import random
 from timetable import create_population
 from fitness import evaluate_timetable
-from operators import mutate_timetable
+from operators import mutate_timetable, crossover_timetables
 from pareto import get_pareto_front
 
 def build_evaluated_population(modules, population_size):
@@ -21,13 +22,41 @@ def build_evaluated_population(modules, population_size):
     return evaluated_population
 
 
-def create_offspring_population(population, modules):
-    # mutating each parent timetable once to get offspring
-    offspring = []
+# def create_offspring_population(population, modules):
+#     # mutating each parent timetable once to get offspring
+#     offspring = []
 
-    for individual in population:
-        parent_timetable = individual["timetable"]
-        child_timetable = mutate_timetable(parent_timetable)
+#     for individual in population:
+#         parent_timetable = individual["timetable"]
+#         child_timetable = mutate_timetable(parent_timetable)
+#         child_objectives = evaluate_timetable(child_timetable, modules)
+
+#         child = {
+#             "timetable": child_timetable,
+#             "objectives": child_objectives
+#         }
+
+#         offspring.append(child)
+
+#     return offspring
+
+def create_offspring_population(population, modules, mutation_rate=0.3):
+    #offspring using crossover and occasional mutation.
+    offspring = []
+    target_size = len(population)
+
+    while len(offspring) < target_size:
+        parent_a = random.choice(population)
+        parent_b = random.choice(population)
+
+        child_timetable = crossover_timetables(
+            parent_a["timetable"],
+            parent_b["timetable"]
+        )
+
+        if random.random() < mutation_rate:
+            child_timetable = mutate_timetable(child_timetable)
+
         child_objectives = evaluate_timetable(child_timetable, modules)
 
         child = {
@@ -38,6 +67,7 @@ def create_offspring_population(population, modules):
         offspring.append(child)
 
     return offspring
+
 
 
 def combine_and_select_pareto(parents, offspring):

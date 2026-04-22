@@ -1,10 +1,13 @@
+import random
+random.seed(42)
+
 from timetable import load_modules, create_all_sessions, create_random_timetable, create_population
 from fitness import count_clashes, count_staff_days, evaluate_timetable
 from population import build_evaluated_population, create_offspring_population, combine_and_select_pareto
 from pareto import dominates, get_pareto_front
 from operators import mutate_timetable
 from optimizer import run_simple_optimizer
-from visualisation import plot_pareto_front
+from visualisation import plot_pareto_front, plot_pareto_with_population
 
 def main():
     modules = load_modules("data/modules.txt")
@@ -24,8 +27,8 @@ def main():
 
     final_population, history = run_simple_optimizer(
         modules,
-        population_size=10,
-        generations=10
+        population_size=20,
+        generations=20
     )
 
     final_front = get_pareto_front(final_population)

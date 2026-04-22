@@ -13,3 +13,16 @@ def mutate_timetable(timetable):
     mutated[chosen_session] = random_timeslot()
 
     return mutated
+
+
+def crossover_timetables(parent_a, parent_b):
+    # Creating one child combining two parent timetables
+    child = {}
+
+    for session in parent_a:
+        if random.random() < 0.5:
+            child[session] = parent_a[session]
+        else:
+            child[session] = parent_b[session]
+
+    return child
