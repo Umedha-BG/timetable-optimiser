@@ -5,7 +5,7 @@ import random
 from timetable import load_modules
 from optimizer import run_simple_optimizer
 from pareto import get_pareto_front
-from visualisation import plot_pareto_front
+from visualisation import plot_pareto_front, plot_convergence, plot_pareto_with_population, plot_parameter_comparison
 
 
 def run_experiment(modules, population_size, generations, mutation_rate, seed):
@@ -28,17 +28,18 @@ def run_experiment(modules, population_size, generations, mutation_rate, seed):
     pareto_front_size = len(unique_points)
 
     return {
-        "population_size": population_size,
-        "generations": generations,
-        "mutation_rate": mutation_rate,
-        "seed": seed,
-        "best_clashes": best_clashes,
-        "best_staff_days": best_staff_days,
-        "pareto_front_size": pareto_front_size,
-        "pareto_points": unique_points,
-        "final_front": final_front,
-        "history": history,
-    }
+    "population_size": population_size,
+    "generations": generations,
+    "mutation_rate": mutation_rate,
+    "seed": seed,
+    "best_clashes": best_clashes,
+    "best_staff_days": best_staff_days,
+    "pareto_front_size": pareto_front_size,
+    "pareto_points": unique_points,
+    "final_front": final_front,
+    "final_population": final_population,
+    "history": history,
+}
 
 
 def save_results_to_csv(results, csv_path):
@@ -57,7 +58,6 @@ def save_results_to_csv(results, csv_path):
 
     with open(csv_path, "a", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
 
         if not file_exists:
             writer.writeheader()
@@ -101,6 +101,37 @@ def main():
 
             plot_pareto_front(result["final_front"], save_path=plot_path, show_plot=False)
 
+            convergence_filename = (
+                f"convergence_pop{setup['population_size']}"
+                f"_gen{setup['generations']}"
+                f"_mut{str(setup['mutation_rate']).replace('.', '_')}"
+                f"_seed{seed}.png"
+            )
+
+            convergence_path = os.path.join("results", "plots", convergence_filename)
+
+            plot_convergence(
+                result["history"],
+                save_path=convergence_path,
+                show_plot=False
+            )
+
+            population_plot_filename = (
+                f"population_pareto_pop{setup['population_size']}"
+                f"_gen{setup['generations']}"
+                f"_mut{str(setup['mutation_rate']).replace('.', '_')}"
+                f"_seed{seed}.png"
+            )
+
+            population_plot_path = os.path.join("results", "plots", population_plot_filename)
+
+            plot_pareto_with_population(
+                result["final_population"],
+                result["final_front"],
+                save_path=population_plot_path,
+                show_plot=False
+            )
+
             row = {
                 "population_size": result["population_size"],
                 "generations": result["generations"],
@@ -123,6 +154,11 @@ def main():
             )
 
     save_results_to_csv(all_results, "results/experiment_results.csv")
+    plot_parameter_comparison(
+    all_results,
+    save_path="results/plots/parameter_comparison.png",
+    show_plot=False
+)
 
 if __name__ == "__main__":
     main()

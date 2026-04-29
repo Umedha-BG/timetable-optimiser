@@ -1,5 +1,4 @@
 population_size,generations,mutation_rate,seed,best_clashes,best_staff_days,pareto_front_size,pareto_points,plot_filename
-population_size,generations,mutation_rate,seed,best_clashes,best_staff_days,pareto_front_size,pareto_points,plot_filename
 20,20,0.3,10,13,20,3,"[(13, 22), (17, 21), (22, 20)]",pareto_pop20_gen20_mut0_3_seed10.png
 50,20,0.3,10,10,19,4,"[(10, 23), (12, 22), (15, 20), (21, 19)]",pareto_pop50_gen20_mut0_3_seed10.png
 50,50,0.3,10,1,14,4,"[(1, 19), (2, 16), (3, 15), (6, 14)]",pareto_pop50_gen50_mut0_3_seed10.png
